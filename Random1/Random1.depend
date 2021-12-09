@@ -1,0 +1,10 @@
+# depslib dependency file v1.0
+1639077100 source:d:\c++ projects\random1\main.cpp
+	<iostream>
+	<stdlib.h>
+	<time.h>
+	<math.h>
+	<windows.h>
+	<random>
+	<iomanip>
+
