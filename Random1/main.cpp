@@ -158,7 +158,7 @@ int exponenta()
     double arg;
     do
     {
-    cout << "x = ";
+    cout << "(if You push 0 program will exit) x = ";
     cin >> arg;
     cout << "exp(" << arg << ")\n"
         << "Calculated using Maclaurin series: "
@@ -176,6 +176,63 @@ int exponenta()
     return 0;
 }
 
+int n, i, j, k;
+double d, s;
+int gauss()
+{
+    do{
+    cout << "Оrder or 0 for exit: " << endl;
+    cin >> n;
+    double **a = new double *[n];
+    for (i = 0; i <= n; i++)
+    a[i] = new double [n];
+    double **a1 = new double *[n];
+    for (i = 0; i <= n; i++)
+    a1[i] = new double [n];
+    double *b = new double [n];
+    double *x = new double [n];
+
+    cout << "Еnter coefficients and free terms " << endl;
+    for (i = 1; i <= n; i++)
+    {
+        for (j = 1; j <= n; j++)
+        {
+            cout << "a[ " << i << "," << j << "]= ";
+            cin >> a[i][j];
+            a1[i][j] = a[i][j];
+        }
+        cout << "b,[ " << i << "]= ";
+        cin >> b[i];
+    }
+    for (k = 1; k <= n; k++) // прямой ход
+    {
+        for (j = k + 1; j <= n; j++)
+        {
+            d = a[j][k] / a[k][k]; // формула (1)
+            for (i = k; i <= n; i++)
+            {
+                a[j][i] = a[j][i] - d * a[k][i]; // формула (2)
+            }
+            b[j] = b[j] - d * b[k]; // формула (3)
+        }
+    }
+    for (k = n; k >= 1; k--) // обратный ход
+    {
+        d = 0;
+        for (j = k + 1; j <= n; j++)
+        {
+            s = a[k][j] * x[j]; // формула (4)
+            d = d + s; // формула (4)
+        }
+        x[k] = (b[k] - d) / a[k][k]; // формула (4)
+    }
+    cout << "system roots: " << endl;
+    for( i = 1; i <= n; i++)
+    cout << "x[" << i << "]=" << x[i] << " " << endl;
+    }while(n!=0);
+    return 0;
+}
+
 int main()
 {
     srand(time(NULL));
@@ -186,6 +243,7 @@ int main()
     int select;
     cout<<"Enter 1 to open generator"<<endl;
     cout<<"Enter 2 to open exponential decomposition"<<endl;
+    cout<<"Enter 3 to open Gaussian expansion"<<endl;
     cin>>select;
     do{
         if(select==1)
@@ -197,11 +255,15 @@ int main()
         {
             exponenta();
         }
+        if(select==3)
+        {
+            gauss();
+        }
         cout<<"\nEnter 1 to open generator"<<endl;
         cout<<"Enter 2 to open exponential decomposition"<<endl;
+        cout<<"Enter 3 to open Gaussian expansion"<<endl;
         cin>>select;
      }while(select!=0);
-
 }
 
 
